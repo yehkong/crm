@@ -5,4 +5,6 @@ import com.itcast.crm.domain.User;
 public interface UserService {
 
 	void regist(User user);
+
+	User login(User user);
 }

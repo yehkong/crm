@@ -8,4 +8,6 @@ public interface UserDao {
 	void save(User user);
 
 	void regist(User user);
+
+	User login(User user);
 }

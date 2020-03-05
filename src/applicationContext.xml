@@ -30,37 +30,71 @@
 	      <props>
 	        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 	        <prop key="hibernate.show_sql">true</prop>
-	        <prop key="hiberate.format_sql">true</prop>
-	        <prop key="hiberate.hbm2ddl.auto">update</prop>
+	        <prop key="hibernate.format_sql">true</prop>
+	        <prop key="hibernate.hbm2ddl.auto">update</prop>
 	      </props>
 	   </property>
 	   <property name="mappingResources">
 	      <list>
 	         <value>com/itcast/crm/domain/User.hbm.xml</value>
+	         <value>com/itcast/crm/domain/Customer.hbm.xml</value>
+	         <value>com/itcast/crm/domain/BaseDict.hbm.xml</value>
 	      </list>
 	   </property>
 	</bean>
 	
 	
-	<!-- 配置Dao -->
+	<!-- 配置userDao -->
 	<bean name="userDao" class="com.itcast.crm.dao.impl.UserDaoImpl">
 	    <property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
-	<!-- 配置Service-->
+	<!-- 配置userService-->
 	<bean name="userService" class="com.itcast.crm.service.impl.UserServiceImpl">
 	   <property name="userDao" ref="userDao"/>
 	</bean>
 	
-	<!-- 配置Action -->
+	<!-- 配置userAction -->
 	<bean name="userAction" class="com.itcast.crm.web.action.UserAction" scope="prototype">
 	   <property name="userService" ref="userService"/>
 	</bean>
 	
-	<!-- 配置 -->
+	<!-- 配置CustomerDao -->
+	<bean id="customerDao" class="com.itcast.crm.dao.impl.CustomerDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
 	
+	<!-- 配置CustomerService -->
+	<bean id="customerService" class="com.itcast.crm.service.impl.CustomerServiceImpl">
+	   <property name="customerDao" ref="customerDao"/>
+	</bean>
 	
+	<!-- 配置CustomerAction -->
+	<bean id="customerAction" class="com.itcast.crm.web.action.CustomerAction" scope="prototype">
+	   <property name="customerAction" ref="customerAction"/>
+	</bean>
 	
+	<!-- 配置BaseDictDao -->
+	<bean name="basedictDao" class="">
+	   <property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
 	
+	<!-- 配置BaseDictService -->
+	<bean name="basedictService" class="">
+	    <property name="basedictDao" ref="basedictDao"></property>
+	</bean>
+	
+	<!-- 配置BaseDictAction -->
+	<bean name="basedictAction" class="">
+	    <property name="basedictService" ref="basedictService"></property>
+	</bean>
+	
+	<!-- 配置事务 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	    <property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
 	
 </beans>

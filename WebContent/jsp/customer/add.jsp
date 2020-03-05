@@ -1,7 +1,24 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function() {
+		$.post("${pageContext.request.contextPath}/baseDict_findByTypeCode.action",
+				{"dict_type_code" : "002"},
+				function(data) {
+					$(data).each(function(i,n){
+						$("#cust_source").append("<option value='"+n.dict_id+"'>"+n.dict_item_name+"</option>");
+					});		
+				}, "json")
+	            });
+</script>
+
 <head>
 <TITLE>添加客户</TITLE> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -65,7 +82,7 @@
 								
 								<td>信息来源 ：</td>
 								<td>
-								<INPUT class=textbox id=sChannel2
+								<INPUT class=textbox id="cust_source"
 														style="WIDTH: 180px" maxLength=50 name="cust_source">
 								</td>
 								<td>所属行业 ：</td>

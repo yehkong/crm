@@ -46,8 +46,8 @@ style="LEFT: 0px; POSITION: absolute; TOP: 0px; BACKGROUND-COLOR: #0066ff"></DIV
         <TR>
           <TD width=360></TD>
           <TD>
-          	<s:actionerror/>
             <TABLE cellSpacing=0 cellPadding=2 border=0>
+              <s:actionerror/>
               <TBODY>
               <TR>
                 <TD style="HEIGHT: 28px" width=80>登 录 名：</TD>
