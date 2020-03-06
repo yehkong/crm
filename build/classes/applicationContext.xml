@@ -60,33 +60,33 @@
 	</bean>
 	
 	<!-- 配置CustomerDao -->
-	<bean id="customerDao" class="com.itcast.crm.dao.impl.CustomerDaoImpl">
+	<bean name="customerDao" class="com.itcast.crm.dao.impl.CustomerDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
 	<!-- 配置CustomerService -->
-	<bean id="customerService" class="com.itcast.crm.service.impl.CustomerServiceImpl">
+	<bean name="customerService" class="com.itcast.crm.service.impl.CustomerServiceImpl">
 	   <property name="customerDao" ref="customerDao"/>
 	</bean>
 	
 	<!-- 配置CustomerAction -->
-	<bean id="customerAction" class="com.itcast.crm.web.action.CustomerAction" scope="prototype">
-	   <property name="customerAction" ref="customerAction"/>
+	<bean name="customerAction" class="com.itcast.crm.web.action.CustomerAction" scope="prototype">
+	   <property name="customerService" ref="customerService"/>
 	</bean>
 	
 	<!-- 配置BaseDictDao -->
-	<bean name="basedictDao" class="">
+	<bean id="basedictDao" class="com.itcast.crm.dao.impl.BaseDictDaoImpl">
 	   <property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
 	<!-- 配置BaseDictService -->
-	<bean name="basedictService" class="">
-	    <property name="basedictDao" ref="basedictDao"></property>
+	<bean id="basedictService" class="com.itcast.crm.service.impl.BaseDictServiceImpl">
+	    <property name="basedictDao" ref="basedictDao"/>
 	</bean>
 	
 	<!-- 配置BaseDictAction -->
-	<bean name="basedictAction" class="">
-	    <property name="basedictService" ref="basedictService"></property>
+	<bean id="basedictAction" class="com.itcast.crm.web.action.BaseDictAction" scope="prototype">
+	    <property name="basedictService" ref="basedictService"/>
 	</bean>
 	
 	<!-- 配置事务 -->

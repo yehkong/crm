@@ -4,20 +4,6 @@
 
 <html>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/jquery-1.11.3.min.js"></script>
-
-<script type="text/javascript">
-
-	$(function() {
-		$.post("${pageContext.request.contextPath}/baseDict_findByTypeCode.action",
-				{"dict_type_code" : "002"},
-				function(data) {
-					$(data).each(function(i,n){
-						$("#cust_source").append("<option value='"+n.dict_id+"'>"+n.dict_item_name+"</option>");
-					});		
-				}, "json")
-	            });
-</script>
 
 <head>
 <TITLE>添加客户</TITLE> 
@@ -26,8 +12,40 @@
 <LINK href="${pageContext.request.contextPath }/css/Manage.css" type=text/css
 	rel=stylesheet>
 
-
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function() {
+		$.post("${pageContext.request.contextPath}/baseDict_findByTypeCode.action",
+				{"dict_type_code" : "006"},
+				function(data) {
+					$(data).each(function(i,n){
+						$("#cust_level").append("<option value='"+n.dict_id+"'>"+n.dict_item_name+"</option>");
+					});		
+				}, "json");
+
+		$.post("${pageContext.request.contextPath}/baseDict_findByTypeCode.action",
+				{"dict_type_code" : "002"},
+				function(data) {
+					$(data).each(function(i,n){
+						$("#cust_source").append("<option value='"+n.dict_id+"'>"+n.dict_item_name+"</option>");
+					});		
+				}, "json");
+
+		$.post("${pageContext.request.contextPath}/baseDict_findByTypeCode.action",
+				{"dict_type_code" : "001"},
+				function(data) {
+					$(data).each(function(i,n){
+						$("#cust_industry").append("<option value='"+n.dict_id+"'>"+n.dict_item_name+"</option>");
+					});		
+				}, "json");
+	      });
+</script> 
+
+
 </HEAD>
 <BODY>
 	<FORM id=form1 name=form1
@@ -73,8 +91,10 @@
 								</td>
 								<td>客户级别 ：</td>
 								<td>
-								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="cust_level">
+									<select id="cust_level" name="basedictLevel.dict_id">
+										<option value=""> -- 请选择 -- </option>
+									</select>
+								
 								</td>
 							</TR>
 							
@@ -82,13 +102,15 @@
 								
 								<td>信息来源 ：</td>
 								<td>
-								<INPUT class=textbox id="cust_source"
-														style="WIDTH: 180px" maxLength=50 name="cust_source">
+								<select id="cust_source" name="basedictSource.dict_id">
+										<option value=""> -- 请选择 -- </option>
+									</select>
 								</td>
 								<td>所属行业 ：</td>
 								<td>
-								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="cust_industry">
+								<select id="cust_industry" name="basedictIndustry.dict_id">
+										<option value=""> -- 请选择 -- </option>
+									</select>
 								</td>
 							</TR>
 							
