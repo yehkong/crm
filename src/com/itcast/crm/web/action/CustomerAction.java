@@ -62,7 +62,7 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
 	//查询所有客户
 	public String findAll() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Customer.class);
-		customerService.findAll(criteria,currPage,pageSize);
+		PageBean pageBean = customerService.findAll(criteria,currPage,pageSize);
 		return "findAll";
 	}
 
