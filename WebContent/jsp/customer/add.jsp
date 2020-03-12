@@ -50,7 +50,7 @@
 <BODY>
 	<FORM id=form1 name=form1
 		action="${pageContext.request.contextPath }/customer_save.action"
-		method=post>
+		method=post enctype="multipart/form-data">
 		
 
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
@@ -129,6 +129,13 @@
 								</td>
 							</TR>
 							
+							<tr>
+							<td>资质文件 ：</td>
+								<td>
+								<input type="file" name="uploadImage">
+								</td>
+								
+							</tr>
 							
 							<tr>
 								<td rowspan=2>

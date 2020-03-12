@@ -5,18 +5,36 @@
 <struts>
 	<!-- 配置Struts2的常量 -->
 	<constant name="struts.action.extension" value="action"/>
+	<constant name="struts.multipart.saveDir" value="/tmp"/>
+	
 	<!-- 配置action -->
-  <package name="crm" extends="struts-default" namespace="/">
+    <package name="crm" extends="struts-default" namespace="/">
 	<action name="user_*" class="userAction" method="{1}">
 	    <result name="login">/login.jsp</result>
 	    <result name="success" type="redirect">/index.jsp</result>
 	</action>
+	
 	<action name="customer_*" class="customerAction" method="{1}">
 	    <result name="saveUI">/jsp/customer/add.jsp</result>
 	    <result name="findAll">/jsp/customer/list.jsp</result>
+	    <result name="saveSuccess" type="redirect">customer_findAll.action</result>
+	    <result name="editSuccess">/jsp/customer/edit.jsp</result>
+	    <result name="updateSuccess" type="redirect">customer_findAll.action</result>
+	    <result name="deleteSuccess" type="redirect">customer_findAll.action</result>
+	    
+	    <interceptor-ref name="defaultStack">
+	        <param name="fileUpload.maxmumSize">2097152</param>
+	        <param name="fileUpload.allowedExtensions">.jpg</param>
+	    </interceptor-ref>
+	    
 	</action>
+	
 	<action name="baseDict_*" class="basedictAction" method="{1}">
 		
+	</action>
+	
+	<action name="linkMan_*" class="linkManAction" method="{1}">
+	      <result name="findAll">/jsp/linkman/list.jsp</result>
 	</action>
   </package>
 </struts>

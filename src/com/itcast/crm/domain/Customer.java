@@ -1,5 +1,8 @@
 package com.itcast.crm.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /*
 CREATE TABLE `cst_customer` (
 		  `cust_id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '客户编号(主键)',
@@ -25,6 +28,23 @@ public class Customer {
      private BaseDict basedictIndustry;
      private BaseDict basedictLevel;
      
+     private Set<LinkMan> linkMans = new HashSet<LinkMan>();
+     
+     public Set<LinkMan> getLinkMans() {
+		return linkMans;
+	}
+	public void setLinkMans(Set<LinkMan> linkMans) {
+		this.linkMans = linkMans;
+	}
+	//资质文件
+     private String cust_Image;
+     
+	public String getCust_Image() {
+		return cust_Image;
+	}
+	public void setCust_Image(String cust_Image) {
+		this.cust_Image = cust_Image;
+	}
 	public BaseDict getBasedictSource() {
 		return basedictSource;
 	}
@@ -67,6 +87,12 @@ public class Customer {
 	}
 	public void setCust_mobile(String cust_mobile) {
 		this.cust_mobile = cust_mobile;
+	}
+	@Override
+	public String toString() {
+		return "Customer [cust_id=" + cust_id + ", cust_name=" + cust_name + ", cust_phone=" + cust_phone
+				+ ", cust_mobile=" + cust_mobile + ", basedictSource=" + basedictSource + ", basedictIndustry="
+				+ basedictIndustry + ", basedictLevel=" + basedictLevel + ", cust_Image=" + cust_Image + "]";
 	}
      
      

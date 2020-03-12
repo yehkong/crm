@@ -19,12 +19,44 @@
 		
 	}
 </SCRIPT>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+
+	$(function() {
+		$.post("${pageContext.request.contextPath}/baseDict_findByTypeCode.action",
+				{"dict_type_code" : "006"},
+				function(data) {
+					$(data).each(function(i,n){
+						$("#cust_level").append("<option value='"+n.dict_id+"'>"+n.dict_item_name+"</option>");
+					});	
+					$("#cust_level option[value='${basedictLevel.dict_id}']").prop("selected","selected");
+				}, "json");
+
+		$.post("${pageContext.request.contextPath}/baseDict_findByTypeCode.action",
+				{"dict_type_code" : "002"},
+				function(data) {
+					$(data).each(function(i,n){
+						$("#cust_source").append("<option value='"+n.dict_id+"'>"+n.dict_item_name+"</option>");
+					});		
+					$("#cust_source option[value='${basedictSource.dict_id}']").prop("selected","selected");
+				}, "json");
+
+		$.post("${pageContext.request.contextPath}/baseDict_findByTypeCode.action",
+				{"dict_type_code" : "001"},
+				function(data) {
+					$(data).each(function(i,n){
+						$("#cust_industry").append("<option value='"+n.dict_id+"'>"+n.dict_item_name+"</option>");
+					});	
+					$("#cust_industry option[value='${basedictIndustry.dict_id}']").prop("selected","selected");
+				}, "json");
+	      });
+</script> 
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
 </HEAD>
 <BODY>
 	<FORM id="customerForm" name="customerForm"
-		action="${pageContext.request.contextPath }/customerServlet?method=list"
+		action="${pageContext.request.contextPath }/customer_findAll.action"
 		method=post>
 		
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
@@ -62,8 +94,26 @@
 											<TBODY>
 												<TR>
 													<TD>客户名称：</TD>
+													<%-- <TD>
+													<s:textfield cssClass="textbox" cssTyle="WIDTH: 80px" maxLength=50 name="cust_name" value="%{cust_name}/>"/>
+													</TD> --%>
 													<TD><INPUT class=textbox id=sChannel2
-														style="WIDTH: 80px" maxLength=50 name="custName"></TD>
+														style="WIDTH: 80px" maxLength=50 name="cust_name"></TD>
+													<TD>
+													   <select  id="cust_level" name="basedictLevel.dict_id">
+													      <option value=""> -请选择- </option>
+													   </select>
+													</TD>
+													<TD>
+													   <select  id="cust_source" name="basedictSource.dict_id">
+													      <option value=""> -请选择- </option>
+													   </select>
+													</TD>
+													<TD>
+													   <select  id="cust_industry" name="basedictIndustry.dict_id">
+													      <option value=""> -请选择- </option>
+													   </select>
+													</TD>
 													
 													<TD><INPUT class=button id=sButton2 type=submit
 														value=" 筛选 " name=sButton2></TD>
@@ -89,19 +139,19 @@
 													<TD>手机</TD>
 													<TD>操作</TD>
 												</TR>
-												<s:iterator var="c" value="list">
+												<s:iterator value="list">
 												<TR
 													style="FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none">
-													<TD><s:property value="#c.cust_name"/></TD>
-													<TD><s:property value="#c.cust_level"/></TD>
-													<TD><s:property value="#c.cust_source"/></TD>
-													<TD><s:property value="#c.cust_industry"/></TD>
-													<TD><s:property value="#c.cust_phone"/></TD>
-													<TD><s:property value="#c.cust_mobile"/></TD>
+													<TD><s:property value="cust_name"/></TD>
+													<TD><s:property value="basedictLevel.dict_item_name"/></TD>
+													<TD><s:property value="basedictSource.dict_item_name"/></TD>
+													<TD><s:property value="basedictIndustry.dict_item_name"/></TD>
+													<TD><s:property value="cust_phone"/></TD>
+													<TD><s:property value="cust_mobile"/></TD>
 													<TD>
-													<a href="${pageContext.request.contextPath }/">修改</a>
+													<a href="${pageContext.request.contextPath }/customer_edit.action?cust_id=<s:property value="cust_id"/>">修改</a>
 													&nbsp;&nbsp;
-													<a href="${pageContext.request.contextPath }/">删除</a>
+													<a href="${pageContext.request.contextPath }/customer_delete.action?cust_id=<s:property value="cust_id"/>">删除</a>
 													</TD>
 												</TR>
 												</s:iterator>
@@ -114,19 +164,36 @@
 									<TD><SPAN id=pagelink>
 											<DIV
 												style="LINE-HEIGHT: 20px; HEIGHT: 20px; TEXT-ALIGN: right">
-												共[<B>${total}</B>]条记录,[<B>${totalPage}</B>]页
+												共[<B><s:property value="totalCount"/></B>]条记录,[<B><s:property value="totalPage"/></B>]页
 												,每页显示
-												<select name="pageSize">
+												<select name="pageSize" onchange="to_page()">
 												
-												<option value="15" <c:if test="${pageSize==1 }">selected</c:if>>1</option>
-												<option value="30" <c:if test="${pageSize==30 }">selected</c:if>>30</option>
+												<option value="2" <s:if test="pageSize == 2">selected</s:if>>2</option>
+												<option value="3" <s:if test="pageSize == 3">selected</s:if>>3</option>
+												<option value="5" <s:if test="pageSize == 5">selected</s:if>>5</option>
+												
 												</select>
 												条
-												[<A href="javascript:to_page(${page-1})">前一页</A>]
-												<B>${page}</B>
-												[<A href="javascript:to_page(${page+1})">后一页</A>] 
+												<s:if test="currPage != 1">
+												[<A href="javascript:to_page(<s:property value="1"/>)">首页</A>]
+												[<A href="javascript:to_page(<s:property value="currPage-1"/>)">前一页</A>]
+												</s:if>
+												<B>
+												  <s:iterator var="i" begin="1" end="totalPage">
+												  	<s:if test="#i == currPage">
+												  	   <s:property value="#i"/>
+												  	</s:if>
+												  	<s:else>
+												  		 <a href="javascript:to_page(<s:property value="#i"/>)"><s:property value="#i"/></a>
+												  	</s:else>
+												  </s:iterator>
+												</B>
+												<s:if test="currPage != totalPage">
+												[<A href="javascript:to_page(<s:property value="currPage+1"/>)">后一页</A>] 
+												[<A href="javascript:to_page(<s:property value="totalPage"/>)">尾页</A>] 
+												</s:if>
 												到
-												<input type="text" size="3" id="page" name="page" />
+												<input type="text" size="3" id="page" name="currPage" />
 												页
 												
 												<input type="button" value="Go" onclick="to_page()"/>

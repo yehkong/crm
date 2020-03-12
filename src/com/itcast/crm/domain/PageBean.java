@@ -38,4 +38,10 @@ public class PageBean<Customer> {
 	}
 	private Integer totalPage;
 	private List<Customer> list;
+	@Override
+	public String toString() {
+		return "PageBean [currPage=" + currPage + ", pageSize=" + pageSize + ", totalCount=" + totalCount
+				+ ", totalPage=" + totalPage + ", list=" + list + "]";
+	}
+	
 }

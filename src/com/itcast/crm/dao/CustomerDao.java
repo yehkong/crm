@@ -10,12 +10,15 @@ public interface CustomerDao {
 
 	void save(Customer customer);
 
-    Integer findCount(DetachedCriteria criteria) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    Integer findCount(DetachedCriteria criteria);
 
 	List<Customer> findAll(DetachedCriteria criteria, Integer currPage, Integer pageSize);
+
+	Customer findByCustid(Long cust_id);
+
+	void update(Customer customer);
+
+	void delete(Customer customer);
 
 
 }

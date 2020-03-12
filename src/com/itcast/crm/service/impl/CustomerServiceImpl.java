@@ -35,11 +35,30 @@ public class CustomerServiceImpl implements CustomerService {
 		Double total = findCount.doubleValue();
 		Double page = Math.ceil(total/pageSize);
 		pageBean.setTotalPage(page.intValue());
+		System.out.println(currPage);
+		System.out.println(pageSize);
 		Integer start = (currPage-1) * pageSize;
 		List<Customer> findAll = customerDao.findAll(criteria,start,pageSize);
 		pageBean.setList(findAll);
 		return pageBean;
 		
+	}
+
+	@Override
+	public Customer findByCustid(Long cust_id) {
+		Customer customer = customerDao.findByCustid(cust_id);
+		return customer;
+	}
+
+	@Override
+	public void update(Customer customer) {
+		customerDao.update(customer);
+		
+	}
+
+	@Override
+	public void delete(Customer customer) {
+		customerDao.delete(customer);
 	}
 	
 

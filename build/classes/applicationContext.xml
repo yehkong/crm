@@ -39,6 +39,7 @@
 	         <value>com/itcast/crm/domain/User.hbm.xml</value>
 	         <value>com/itcast/crm/domain/Customer.hbm.xml</value>
 	         <value>com/itcast/crm/domain/BaseDict.hbm.xml</value>
+	         <value>com/itcast/crm/domain/LinkMan.hbm.xml</value>
 	      </list>
 	   </property>
 	</bean>
@@ -89,6 +90,20 @@
 	    <property name="basedictService" ref="basedictService"/>
 	</bean>
 	
+	<!-- 配置LinkManDao -->
+	<bean name="linkManDao" class="com.itcast.crm.dao.impl.LinkManDaoImpl">
+	 <property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- 配置LinkManService -->
+	<bean id="linkManService" class="com.itcast.crm.service.impl.LinkManServiceImpl">
+	    <property name="linkManDao" ref="linkManDao"/>
+	</bean>
+	
+	<!-- 配置LinkManAction -->
+	<bean id="linkManAction" class="com.itcast.crm.web.action.LinkManAction" scope="prototype">
+	    <property name="linkManService" ref="linkManService"/>
+	</bean>
 	<!-- 配置事务 -->
 	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 	    <property name="sessionFactory" ref="sessionFactory"/>
